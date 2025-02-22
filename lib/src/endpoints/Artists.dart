@@ -27,17 +27,9 @@ class ArtistsEnd extends BaseClient {
       call: endpoints.details.artist,
       params: {'artistId': artist.id},
     );
-    if (response["artistId"].isEmpty) {
+    if (response["topSonge"]["songs"].isEmpty) {
       throw Exception("No songs found");
     }
     return ArtistWithSongs.fromJson(response);
   }
-}
-
-void main() async {
-  final artists = ArtistsEnd();
-  final artist = await artists.artistById("513159");
-  final songs = await artists.getartistsongs(artist);
-  print(artist);
-  print(songs.songs.songs[0].title);
 }

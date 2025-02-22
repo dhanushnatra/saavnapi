@@ -7,7 +7,7 @@ class Artist {
   Artist({required this.id, required this.title, required this.imageUrl});
   factory Artist.fromJson(Map<String, dynamic> json) {
     return Artist(
-      id: json['artistId'] as String,
+      id: json['artistId'] != null ? json['artistId'] as String : json['id'] as String,
       title: json['name'] as String,
       imageUrl: json['image'] as String,
     );

@@ -38,7 +38,7 @@ void main() {
       });
 
   client.artists
-      .fetchArtists("arijit")
+      .fetchArtists("Micheal jackson")
       .then((artists) {
         for (var artist in artists.artists) {
           print("Artist: ${artist.title}");
