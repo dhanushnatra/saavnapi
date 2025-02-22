@@ -12,16 +12,7 @@ class AlbumsEnd extends BaseClient {
       call: endpoints.search.albums,
       params: {'q': query.replaceAll(" ", "+"), 'n': n, 'p': p},
     );
-    List<Album> albums = [];
-    if (!response["results"].isEmpty) {
-      for (var album in response["results"]) {
-        albums.add(await albumById(album["id"]));
-      }
-    }
-    if (albums.isEmpty) {
-      throw Exception("No albums found");
-    }
-    return Albums(albums: albums);
+    return Albums.fromJsonlist(response["results"]);
   }
 
   Future<Albums> trending({String language = "telugu"}) async {
@@ -30,16 +21,7 @@ class AlbumsEnd extends BaseClient {
       language: language,
       params: {'entity_type': "album"},
     );
-    List<Album> albums = [];
-    if (!response.isEmpty) {
-      for (var album in response) {
-        albums.add(await albumById(album["id"]));
-      }
-    }
-    if (albums.isEmpty) {
-      throw Exception("No albums found");
-    }
-    return Albums(albums: albums);
+    return Albums.fromJsonlist(response);
   }
 
   Future<Album> albumById(String id) async {
@@ -51,5 +33,16 @@ class AlbumsEnd extends BaseClient {
       throw Exception("No songs found");
     }
     return Album.fromJson(response);
+  }
+
+  Future<AlbumWithSongs> getalbumsongs(Album album) async {
+    final response = await request(
+      call: endpoints.details.album,
+      params: {'albumid': album.id},
+    );
+    if (response["list"].isEmpty) {
+      throw Exception("No songs found");
+    }
+    return AlbumWithSongs.fromJson(response);
   }
 }

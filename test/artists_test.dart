@@ -6,12 +6,25 @@ void main() {
   ArtistsEnd artistsEnd = ArtistsEnd();
   test("Artist search", () {
     artistsEnd
-        .fetchArtists("arijit singh")
+        .fetchArtists("Micheal Jackson")
         .then((value) => expect(value, isA<Artists>()));
   });
   test("artist by id", () {
     artistsEnd
-        .artistById("459320")
+        .artistById("513159")
         .then((value) => expect(value, isA<Artist>()));
+  });
+
+  test("artist with songs", () {
+    artistsEnd
+        .getartistsongs(
+          Artist(
+            id: "513159",
+            title: "Micheal jackson",
+            imageUrl:
+                "https://c.saavncdn.com/artists/Michael_Jackson_150x150.jpg",
+          ),
+        )
+        .then((value) => expect(value, isA<ArtistWithSongs>()));
   });
 }

@@ -19,4 +19,16 @@ void main() {
         .trending(language: "telugu")
         .then((value) => expect(value, isA<Albums>()));
   });
+  test("albums with songs", () {
+    albumsEnd
+        .getalbumsongs(
+          Album(
+            id: "14799536",
+            title: "believer",
+            imageUrl:
+                "https://c.saavncdn.com/128/Believer-English-2018-20190107213710-150x150.jpg",
+          ),
+        )
+        .then((value) => expect(value, isA<AlbumWithSongs>()));
+  });
 }

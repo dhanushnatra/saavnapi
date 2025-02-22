@@ -17,4 +17,16 @@ void main() {
   test("trending playlist", () {
     playlistsEnd.trending().then((value) => expect(value, isA<Playlists>()));
   });
+  test("artist with songs", () {
+    playlistsEnd
+        .getplaylistsongs(
+          Playlist(
+            id: "89662467",
+            title: "money Money Money",
+            imageUrl:
+                "https://c.saavncdn.com/editorial/logo/MoneyMoneyMoney_89662467_20161108.jpg?bch=1729489870",
+          ),
+        )
+        .then((value) => expect(value, isA<PlaylistWithSongs>()));
+  });
 }

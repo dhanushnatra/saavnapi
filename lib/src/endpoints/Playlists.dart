@@ -13,16 +13,10 @@ class PlaylistsEnd extends BaseClient {
         call: endpoints.search.playlists,
         params: {'q': query.replaceAll(" ", "+"), 'n': n, 'p': p},
       );
-      List<Playlist> playlists = [];
-      if (!response["results"].isEmpty) {
-        for (var playlist in response["results"]) {
-          playlists.add(await playlistById(playlist["id"]));
-        }
-      }
-      if (playlists.isEmpty) {
+      if (response["results"].isEmpty) {
         throw Exception("No playlists found");
       }
-      return Playlists(playlists: playlists);
+      return Playlists.fromJsonlist(response["results"]);
     } catch (e) {
       throw Exception("No playlists found");
     }
@@ -35,16 +29,10 @@ class PlaylistsEnd extends BaseClient {
         language: language,
         params: {'entity_type': "playlist"},
       );
-      List<Playlist> playlists = [];
-      if (!response.isEmpty) {
-        for (var playlist in response) {
-          playlists.add(await playlistById(playlist["id"]));
-        }
-      }
-      if (playlists.isEmpty) {
+      if (response.isEmpty) {
         throw Exception("No playlists found");
       }
-      return Playlists(playlists: playlists);
+      return Playlists.fromJsonlist(response);
     } catch (e) {
       throw Exception("No playlists found");
     }
@@ -60,6 +48,21 @@ class PlaylistsEnd extends BaseClient {
         throw Exception("No songs found");
       }
       return Playlist.fromJson(response);
+    } catch (e) {
+      throw Exception("No songs found");
+    }
+  }
+
+  Future<PlaylistWithSongs> getplaylistsongs(Playlist playlist) async {
+    try {
+      final response = await request(
+        call: endpoints.details.playlist,
+        params: {'listid': playlist.id},
+      );
+      if (response["list"].isEmpty) {
+        throw Exception("No songs found");
+      }
+      return PlaylistWithSongs.fromJson(response);
     } catch (e) {
       throw Exception("No songs found");
     }

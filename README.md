@@ -19,7 +19,10 @@ Add the following to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-    saavnapi: ^0.0.1
+    saavnapi: 
+        git:
+            url: https://github.com/dhanushnatra/saavnapi.git
+            ref: main
 ```
 
 Then run:
@@ -37,7 +40,7 @@ void main() async {
     final api = SaavnAPI();
 
     // Search for songs
-    var searchResults = await api.search('song name');
+    var searchResults = await api.('song name');
     print(searchResults);
 
     // Get song details
