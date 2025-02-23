@@ -28,7 +28,7 @@ class Song {
   factory Song.fromJson(Map<String, dynamic> json) {
     return Song(
       id: json['id'] as String,
-      title: json['title'] as String,
+      title: (json['title'] as String).replaceAll("&quot;", ""),
       imageUrl: json['image'] as String,
       url: decrypt(json["more_info"]['encrypted_media_url'], "_160"),
       duration: json["more_info"]['duration'],
