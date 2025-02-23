@@ -30,7 +30,6 @@ class PlaylistWithSongs {
   final Songs songs;
   PlaylistWithSongs({required this.playlist, required this.songs});
   factory PlaylistWithSongs.fromJson(Map<String, dynamic> json) {
-    print(json);
     return PlaylistWithSongs(
       playlist: Playlist.fromJson(json),
       songs: Songs.fromJsonlist(json["list"]),
