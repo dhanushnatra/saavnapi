@@ -40,7 +40,7 @@ void main() async {
     final api = SaavnAPI();
 
     // Search for songs
-    var searchResults = await api.('song name');
+    var searchResults = await api.songs.fetchSonhs('song name');
     print(searchResults);
 
     // Get song details
